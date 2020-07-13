@@ -7,6 +7,7 @@ import FileController from "./app/controllers/FileController";
 import SessionController from "./app/controllers/SessionController";
 import ProviderController from "./app/controllers/ProviderController";
 import ScheduleController from "./app/controllers/ScheduleController";
+import AvailableController from "./app/controllers/AvailableController";
 import AppointmentController from "./app/controllers/AppointmentController";
 import NotificationController from "./app/controllers/NotificationController.js";
 
@@ -23,6 +24,7 @@ routes.use(authMiddleware);
 routes.put("/users", UserController.update);
 
 routes.get("/providers", ProviderController.index);
+routes.get("/providers/:providerId/available", AvailableController.index);
 
 routes.post("/appointments", AppointmentController.store);
 routes.get("/appointments", AppointmentController.index);
