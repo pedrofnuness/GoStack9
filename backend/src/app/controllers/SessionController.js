@@ -1,7 +1,8 @@
-import jwt from "jsonwebtoken";
-import User from "../models/User";
-import authConfig from "../../config/auth";
-import * as Yup from "yup";
+import jwt from 'jsonwebtoken';
+import User from '../models/User';
+import File from '../models/File';
+import authConfig from '../../config/auth';
+import * as Yup from 'yup';
 
 class SessionController {
   async store(req, res) {
@@ -12,28 +13,39 @@ class SessionController {
       });
 
       if (!(await schema.isValid(req.body))) {
-        return res.status(400).json({ error: "Validation failed" });
+        return res.status(400).json({ error: 'Validation failed' });
       }
 
       const { email, password } = req.body;
 
-      const user = await User.findOne({ where: { email } });
+      const user = await User.findOne({
+        where: { email },
+        include: [
+          {
+            model: File,
+            as: 'avatar',
+            attributes: ['id', 'path', 'url'],
+          },
+        ],
+      });
 
       if (!user) {
-        return res.status(401).json({ error: "User not found" });
+        return res.status(401).json({ error: 'User not found' });
       }
 
       if (!(await user.checkPassword(password))) {
-        return res.status(401).json({ error: "Password does not match" });
+        return res.status(401).json({ error: 'Password does not match' });
       }
 
-      const { id, name } = user;
+      const { id, name, avatar, provider } = user;
 
       return res.json({
         user: {
           id,
           name,
           email,
+          avatar,
+          provider,
         },
         token: jwt.sign({ id }, authConfig.secret, {
           expiresIn: authConfig.expiresIn,
@@ -42,7 +54,7 @@ class SessionController {
     } catch (err) {
       return res
         .status(500)
-        .json({ error: "Check server or database connection" });
+        .json({ error: 'Check server or database connection' });
     }
   }
 }
