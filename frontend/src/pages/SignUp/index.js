@@ -26,7 +26,7 @@ function SignUp() {
         <Input name="password" type="password" placeholder="Sua senha" />
 
         <button type="submit">Criar Conta</button>
-        <Link to="/">Já possuo login</Link>
+        <a href="/">Já possuo login</a>
       </Form>
     </>
   );
