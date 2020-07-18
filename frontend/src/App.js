@@ -11,7 +11,6 @@ import Routes from './routes';
 import history from './services/history';
 import { store, persistor } from './store';
 import GlobalStyle from './styles/global';
-import Header from './components/Header';
 
 function App() {
   return (
