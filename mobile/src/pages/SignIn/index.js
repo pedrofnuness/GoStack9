@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {Image} from 'react-native';
 import logo from '~/assets/logo.png';
 
@@ -13,7 +13,11 @@ import {
   SignLinkText,
 } from './styles';
 
-const SignIn = () => {
+const SignIn = ({navigation}) => {
+  const passwordRef = useRef();
+
+  const handleSubmit = () => {};
+
   return (
     <Background>
       <Container>
@@ -21,23 +25,28 @@ const SignIn = () => {
 
         <Form>
           <FormInput
-            icon="mail-outline"
-            keyboardType="email-address"
             autoCorrect={false}
+            icon="mail-outline"
             autoCapitalize="none"
+            keyboardType="email-address"
             placeholder="Digite seu e-mail"
+            returnKeyType="next"
+            onSubmitEditing={() => passwordRef.current.focus()}
           />
 
           <FormInput
             secureTextEntry
             icon="lock-outline"
             placeholder="Sua Senha"
+            ref={passwordRef}
+            returnKeyType="send"
+            onSubmitEditing={handleSubmit}
           />
 
-          <SubmitButton onPress={() => {}}>Acessar</SubmitButton>
+          <SubmitButton onPress={handleSubmit}>Acessar</SubmitButton>
         </Form>
 
-        <SignLink onPress={() => {}}>
+        <SignLink onPress={() => navigation.navigate('SignUp')}>
           <SignLinkText>Criar conta gratuita</SignLinkText>
         </SignLink>
       </Container>
