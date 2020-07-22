@@ -20,8 +20,6 @@ const Confirm = ({ navigation }) => {
   );
 
   const handleAddAppointment = async () => {
-    console.log('TTTT');
-
     await api.post('appointments', {
       provider_id: provider.id,
       date: time,

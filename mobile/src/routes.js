@@ -32,6 +32,7 @@ export default (signedIn = false) =>
                   Confirm,
                 },
                 {
+                  resetOnBlur: true,
                   defaultNavigationOptions: {
                     headerTransparent: true,
                     headerTitleAlign: 'center',
